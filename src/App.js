@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import { NavigateHook } from "./NavigateHook";
 
 function App() {
+  const { nameArr, handleChangeArr } = NavigateHook({
+    initialArr: ["Huyen", "Hoa", "Hung", "Long"],
+  });
+  const [name, setName] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <p>学生一覧: [{nameArr.map((item) => item + ",")}]</p>
+      <p>追加する名前を入力してください</p>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleChangeArr(name);
+        }}
+      >
+        <label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+        <input type="submit" value="確定" />
+      </form>
+      <p>追加する名前: {name}</p>
+      <p>新しい一覧: [{nameArr.map((item) => item + ",")}]</p>
     </div>
   );
 }
